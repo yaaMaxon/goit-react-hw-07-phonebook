@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchAddContact, fetchContacts, fetchDeleteContact } from "services/api";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const requestContacts = createAsyncThunk(
   "contacts/fetchAll",
@@ -17,7 +17,7 @@ export const addContact = createAsyncThunk(
   "contacts/addContact",
   async (newContact, thunkAPI) => {
     try {
-      const contact = await  fetchAddContact(newContact);
+      const contact = await fetchAddContact(newContact);
       
       return contact;
     } catch (error) {
@@ -30,7 +30,7 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       const contact = await fetchDeleteContact(contactId);
-      
+      console.log(contact)
       return contact;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -92,7 +92,7 @@ const contactsSlice = createSlice({
     .addCase(deleteContact.fulfilled, (state, action) => {
       state.contacts.isLoading = false;
       state.contacts.items = state.contacts.items.filter(
-        contact => contact.id !== action.payload);
+        contact => contact.name !== action.payload.name);
     })
     .addCase(deleteContact.rejected, (state, action) => {
       state.contacts.isLoading = false;
@@ -104,3 +104,4 @@ const contactsSlice = createSlice({
 export const { filterUpdate } = contactsSlice.actions;
 // Редюсер слайсу
 export const contactsReducer = contactsSlice.reducer;
+

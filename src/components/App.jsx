@@ -1,6 +1,6 @@
 import { ContactForm } from "./ContactForm/ContactForm";
-import { Filter } from "./Filter/Filter";
 import { ContactList } from "./ContactList/ContactList";
+import { Filter } from "./Filter/Filter";
 import { Loader } from "./Loader/Loader";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,14 +35,12 @@ dispatch(addContact(contact));
 
 }
 
-
-// const handleChange = event => {
-//     dispatch(filterUpdate(event.target.value));
+// const handleChange = ({ target: {value}}) => {
+//     dispatch(filterUpdate(value));
 // }
-const handleChange = ({ target: {value}}) => {
-    dispatch(filterUpdate(value));
+const handleChange = event => {
+    dispatch(filterUpdate(event.target.value));
 }
-
 
 const onDelete = contactId => {
     dispatch(deleteContact(contactId));
